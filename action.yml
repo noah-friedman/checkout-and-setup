@@ -1,0 +1,15 @@
+name: Checkout and setup
+description: Simple GitHub Action that checks out the repository and sets up the environment.
+inputs:
+  secrets:
+    description: 'Secrets required for `setup` action.'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Setup environment
+      uses: ./.github/actions/setup
+      with:
+        secrets: ${{ inputs.secrets }}

@@ -4,6 +4,9 @@ inputs:
   secrets:
     description: 'Secrets required for `setup` action.'
     required: false
+  variables:
+    description: 'Non-secret variables required for `setup` action.'
+    required: false
 runs:
   using: 'composite'
   steps:
@@ -13,3 +16,4 @@ runs:
       uses: ./.github/actions/setup
       with:
         secrets: ${{ inputs.secrets }}
+        variables: ${{ inputs.variables }}

@@ -10,6 +10,9 @@ inputs:
   ref:
     description: "Git ref to checkout. Maps to the `ref` argument to `actions/checkout@v4`."
     required: false
+  setup:
+    description: "Ref containing the `setup` action. Uses the default (or `inputs.ref`) branch if not provided."
+    required: false
     
 runs:
   using: 'composite'
@@ -18,6 +21,13 @@ runs:
       uses: actions/checkout@v4
       with: 
         ref: ${{ inputs.ref }}
+    - name: Checkout the setup action
+      if: ${{ inputs.setup }}
+      shell: "/usr/bin/bash -e {0}"
+      run: |
+        git fetch origin "${{ inputs.setup }}"
+        git checkout FETCH_HEAD -- .github/actions/setup
+        git rm -r --cached .github
     - name: Setup environment
       uses: ./.github/actions/setup
       with:

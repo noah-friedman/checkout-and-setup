@@ -13,6 +13,9 @@ inputs:
   setup:
     description: "Ref containing the `setup` action. Uses the default (or `inputs.ref`) branch if not provided."
     required: false
+  submodules:
+    description: "Passes through to `actions/checkout`."
+    required: false
     
 runs:
   using: 'composite'
@@ -21,6 +24,7 @@ runs:
       uses: actions/checkout@v4
       with: 
         ref: ${{ inputs.ref }}
+        submodules: ${{ inputs.submodules }}
     - name: Checkout the setup action
       if: ${{ inputs.setup }}
       shell: "/usr/bin/bash -e {0}"
